@@ -28,10 +28,10 @@ class PatientForm(FlaskForm):
     ], default='active')
     priority = SelectField('Priority', choices=[
         ('low', 'Low'),
-        ('normal', 'Normal'),
+        ('medium', 'Medium'),
         ('high', 'High'),
         ('urgent', 'Urgent')
-    ], default='normal')
+    ], default='medium')
     medical_notes = TextAreaField('Medical Notes', validators=[Optional()])
     submit = SubmitField('Save')
 
@@ -44,7 +44,7 @@ class PatientStatusForm(FlaskForm):
     ], validators=[DataRequired()])
     priority = SelectField('Priority', choices=[
         ('low', 'Low'),
-        ('normal', 'Normal'),
+        ('medium', 'Medium'),
         ('high', 'High'),
         ('urgent', 'Urgent')
     ], validators=[DataRequired()])

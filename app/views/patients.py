@@ -50,7 +50,15 @@ def edit(id):
     patient = Patient.query.get_or_404(id)
     form = PatientForm(obj=patient)
     if form.validate_on_submit():
-        form.populate_obj(patient)
+        patient.nhs_number = form.nhs_number.data.strip()
+        patient.first_name = form.first_name.data.strip()
+        patient.last_name = form.last_name.data.strip()
+        patient.date_of_birth = form.date_of_birth.data
+        patient.contact_phone = form.contact_phone.data or None
+        patient.contact_email = form.contact_email.data or None
+        patient.status = form.status.data
+        patient.priority = form.priority.data
+        patient.medical_notes = form.medical_notes.data
         patient.updated_at = datetime.utcnow()
         db.session.commit()
         flash('Patient updated successfully.', 'success')

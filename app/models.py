@@ -33,7 +33,7 @@ class Patient(db.Model):
     contact_phone = db.Column(db.String(30), nullable=True)
     contact_email = db.Column(db.String(120), nullable=True)
     status = db.Column(db.String(20), default="active")  # active, inactive, discharged, deceased
-    priority = db.Column(db.String(20), default="normal")  # low, normal, high, urgent
+    priority = db.Column(db.String(20), default="medium")  # low, medium, high, urgent
     medical_notes = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -48,14 +48,15 @@ class Patient(db.Model):
     @property
     def next_appointment(self):
         from datetime import datetime
-        return self.appointments.filter(
+        return Appointment.query.filter(
+            Appointment.patient_id == self.id,
             Appointment.scheduled_for > datetime.now(),
             Appointment.status == 'scheduled'
         ).order_by(Appointment.scheduled_for.asc()).first()
     
     @property
     def total_appointments(self):
-        return len(self.appointments)
+        return Appointment.query.filter_by(patient_id=self.id).count()
 
 class Service(db.Model):
     id = db.Column(db.Integer, primary_key=True)
