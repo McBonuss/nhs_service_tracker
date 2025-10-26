@@ -32,8 +32,30 @@ class Patient(db.Model):
     date_of_birth = db.Column(db.Date, nullable=False)
     contact_phone = db.Column(db.String(30), nullable=True)
     contact_email = db.Column(db.String(120), nullable=True)
+    status = db.Column(db.String(20), default="active")  # active, inactive, discharged, deceased
+    priority = db.Column(db.String(20), default="normal")  # low, normal, high, urgent
+    medical_notes = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     appointments = db.relationship('Appointment', backref='patient', cascade="all, delete-orphan")
+
+    @property
+    def age(self):
+        from datetime import date
+        today = date.today()
+        return today.year - self.date_of_birth.year - ((today.month, today.day) < (self.date_of_birth.month, self.date_of_birth.day))
+    
+    @property
+    def next_appointment(self):
+        from datetime import datetime
+        return self.appointments.filter(
+            Appointment.scheduled_for > datetime.now(),
+            Appointment.status == 'scheduled'
+        ).order_by(Appointment.scheduled_for.asc()).first()
+    
+    @property
+    def total_appointments(self):
+        return len(self.appointments)
 
 class Service(db.Model):
     id = db.Column(db.Integer, primary_key=True)

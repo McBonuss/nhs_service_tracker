@@ -20,7 +20,36 @@ class PatientForm(FlaskForm):
     date_of_birth = DateField('Date of birth', validators=[DataRequired()])
     contact_phone = StringField('Contact phone', validators=[Optional(), Length(max=30)])
     contact_email = StringField('Contact email', validators=[Optional(), Email()])
+    status = SelectField('Status', choices=[
+        ('active', 'Active'),
+        ('inactive', 'Inactive'),
+        ('discharged', 'Discharged'),
+        ('deceased', 'Deceased')
+    ], default='active')
+    priority = SelectField('Priority', choices=[
+        ('low', 'Low'),
+        ('normal', 'Normal'),
+        ('high', 'High'),
+        ('urgent', 'Urgent')
+    ], default='normal')
+    medical_notes = TextAreaField('Medical Notes', validators=[Optional()])
     submit = SubmitField('Save')
+
+class PatientStatusForm(FlaskForm):
+    status = SelectField('Status', choices=[
+        ('active', 'Active'),
+        ('inactive', 'Inactive'),
+        ('discharged', 'Discharged'),
+        ('deceased', 'Deceased')
+    ], validators=[DataRequired()])
+    priority = SelectField('Priority', choices=[
+        ('low', 'Low'),
+        ('normal', 'Normal'),
+        ('high', 'High'),
+        ('urgent', 'Urgent')
+    ], validators=[DataRequired()])
+    medical_notes = TextAreaField('Medical Notes', validators=[Optional()])
+    submit = SubmitField('Update Status')
 
 class ServiceForm(FlaskForm):
     name = StringField('Service name', validators=[DataRequired(), Length(max=120)])
