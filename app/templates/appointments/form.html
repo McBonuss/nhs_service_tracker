@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ mode }} appointment</h1>
+<form method="post" novalidate>
+  {{ form.hidden_tag() }}
+  <div>{{ form.patient_id.label }} {{ form.patient_id() }}</div>
+  <div>{{ form.service_id.label }} {{ form.service_id() }}</div>
+  <div>{{ form.scheduled_for.label }} {{ form.scheduled_for() }}</div>
+  <div>{{ form.location.label }} {{ form.location() }}</div>
+  <div>{{ form.status.label }} {{ form.status() }}</div>
+  <div>{{ form.notes.label }} {{ form.notes(rows=4) }}</div>
+  <div>{{ form.submit() }}</div>
+</form>
+{% endblock %}

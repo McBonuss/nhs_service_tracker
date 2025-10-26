@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ mode }} patient</h1>
+<form method="post" novalidate>
+  {{ form.hidden_tag() }}
+  <div>{{ form.nhs_number.label }} {{ form.nhs_number() }}</div>
+  <div>{{ form.first_name.label }} {{ form.first_name() }}</div>
+  <div>{{ form.last_name.label }} {{ form.last_name() }}</div>
+  <div>{{ form.date_of_birth.label }} {{ form.date_of_birth() }}</div>
+  <div>{{ form.contact_phone.label }} {{ form.contact_phone() }}</div>
+  <div>{{ form.contact_email.label }} {{ form.contact_email() }}</div>
+  <div>{{ form.submit() }}</div>
+</form>
+{% endblock %}

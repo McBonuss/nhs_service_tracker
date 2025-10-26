@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.env
+.env.*
+instance/
+*.sqlite3
+dev.db*
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+node_modules/
+.DS_Store
+.vscode/

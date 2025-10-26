@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>NHS Service Tracker</h1>
+<p>Use this dashboard to manage patients, services, and appointments. All actions provide immediate feedback.</p>
+<div class="grid">
+  <a class="card" href="{{ url_for('patients.list') }}"><h2>Patients</h2><p>Add and manage patient demographics.</p></a>
+  <a class="card" href="{{ url_for('services.list') }}"><h2>Services</h2><p>Define clinical services (e.g., Cardiology, Imaging).</p></a>
+  <a class="card" href="{{ url_for('appointments.list') }}"><h2>Appointments</h2><p>Schedule and track patient appointments.</p></a>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Appointments</h1>
+<form method="get" class="inline">
+  <label for="q">Search</label>
+  <input id="q" name="q" value="{{ q or '' }}" />
+  <button type="submit">Filter</button>
+  <a class="button" href="{{ url_for('appointments.create') }}">New appointment</a>
+</form>
+<table>
+  <thead><tr><th>When</th><th>Patient</th><th>Service</th><th>Location</th><th>Status</th><th>Actions</th></tr></thead>
+  <tbody>
+  {% for a in appointments %}
+    <tr>
+      <td>{{ a.scheduled_for.strftime('%Y-%m-%d %H:%M') }}</td>
+      <td>{{ a.patient.last_name }}, {{ a.patient.first_name }}</td>
+      <td>{{ a.service.name }}</td>
+      <td>{{ a.location }}</td>
+      <td>{{ a.status }}</td>
+      <td>
+        <a href="{{ url_for('appointments.edit', id=a.id) }}">Edit</a>
+        <form method="post" action="{{ url_for('appointments.delete', id=a.id) }}" class="inline" onsubmit="return confirm('Delete this appointment?');">
+          <button>Delete</button>
+        </form>
+      </td>
+    </tr>
+  {% else %}
+    <tr><td colspan="6">No appointments found.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
