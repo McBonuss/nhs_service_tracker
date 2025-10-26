@@ -1,29 +1,45 @@
 # NHS Service Tracker
 
-A comprehensive Flask web application for managing NHS patients, services, and appointments. Built with modern web technologies and designed for healthcare professionals to efficiently track and manage patient care workflows.
+A comprehensive Flask web application for managing NHS patients, services, and appointments. Built with modern web technologies and designed for healthcare professionals to efficiently track and manage patient care workflows with enhanced patient status management and detailed analytics.
 
 ## 🏥 Overview
 
 The NHS Service Tracker is a full-featured healthcare management system that provides:
 
-- **Patient Management**: Complete patient records with NHS numbers, demographics, and contact information
+- **Enhanced Patient Management**: Complete patient records with NHS numbers, demographics, contact information, status tracking, priority levels, and medical notes
+- **Patient Status Management**: Comprehensive status tracking (Active, Inactive, Pending, Discharged) with priority levels (Low, Medium, High, Urgent)
+- **Advanced Dashboard**: Real-time statistics showing patient counts, appointment summaries, service usage, and recent activity
 - **Service Management**: Comprehensive NHS service catalog (Cardiology, Mental Health, GP services, etc.)
 - **Appointment Scheduling**: Advanced booking system with status tracking and location management
 - **User Authentication**: Secure role-based access control with admin and clinician roles
 - **Search & Filtering**: Powerful search functionality across all entities
-- **Responsive Design**: Mobile-friendly interface following NHS design principles
+- **Modern Responsive Design**: Professional NHS-compliant interface with mobile-friendly design
 
 ## 🚀 Features
 
 ### Core Functionality
 
-- ✅ **Patient Records**: Create, view, edit, and search patient information
+- ✅ **Enhanced Patient Records**: Create, view, edit, and search patient information with status tracking and priority management
+- ✅ **Patient Status Management**: Track patient status (Active, Inactive, Pending, Discharged) with priority levels and medical notes
+- ✅ **Advanced Dashboard**: Real-time statistics, patient distribution charts, appointment summaries, and recent activity tracking
+- ✅ **Patient Detail Views**: Comprehensive patient profiles with calculated age, appointment history, and status management
 - ✅ **NHS Services**: Manage healthcare services with detailed descriptions
 - ✅ **Appointment System**: Schedule, track, and manage patient appointments
 - ✅ **User Management**: Role-based authentication (Admin/Clinician)
 - ✅ **Search & Filter**: Real-time search across patients, services, and appointments
 - ✅ **Data Validation**: Comprehensive form validation and error handling
+- ✅ **Modern UI/UX**: Professional NHS-compliant design with responsive layouts and interactive elements
 - ✅ **Accessibility**: WCAG-compliant interface with screen reader support
+
+### Enhanced Features (Latest Updates)
+
+- ✅ **Patient Status Dashboard**: Real-time patient statistics with status distribution charts
+- ✅ **Priority Management**: Color-coded priority levels (Low, Medium, High, Urgent)
+- ✅ **Advanced Patient Profiles**: Detailed patient views with appointment history and status tracking
+- ✅ **Status Management Interface**: Dedicated forms for updating patient status and priority
+- ✅ **Enhanced UI Components**: Modern card layouts, badges, and responsive grid systems
+- ✅ **Calculated Fields**: Automatic age calculation, appointment counting, and next appointment tracking
+- ✅ **Professional Styling**: NHS-compliant color scheme with modern typography and interactive elements
 
 ### Technical Features
 
@@ -40,6 +56,34 @@ The NHS Service Tracker is a full-featured healthcare management system that pro
 - **Flask 3.0+**
 - **SQLite** (default) or **PostgreSQL** (production)
 - **Modern web browser** (Chrome, Firefox, Safari, Edge)
+
+## 🎆 Latest Updates & Features
+
+### 📊 Enhanced Dashboard
+
+- **Real-time Statistics**: Patient counts, appointment summaries, service usage metrics
+- **Status Distribution**: Visual breakdown of patient statuses with color-coded badges
+- **Quick Actions**: Fast navigation cards for common tasks
+- **Recent Activity**: Live feed of patient registrations and appointment updates
+- **Responsive Grid Layout**: Professional card-based design that works on all devices
+
+### 👥 Advanced Patient Management
+
+- **Comprehensive Status Tracking**: Active, Inactive, Pending, Discharged with visual indicators
+- **Priority Levels**: Low, Medium, High, Urgent with color-coded badges
+- **Medical Notes**: Free-text clinical observations and notes
+- **Detailed Patient Profiles**: Age calculation, appointment history, next appointment tracking
+- **Dedicated Status Editor**: Streamlined interface for updating patient status and priority
+- **Enhanced Forms**: Modern, accessible forms with comprehensive validation
+
+### 🎨 Modern UI/UX Design
+
+- **NHS-Compliant Styling**: Professional healthcare color scheme and typography
+- **Responsive Design**: Seamless experience across desktop, tablet, and mobile devices
+- **Interactive Elements**: Hover effects, smooth transitions, and intuitive navigation
+- **Accessibility**: WCAG-compliant with screen reader support and keyboard navigation
+- **Status Badges**: Visual indicators for patient status and priority levels
+- **Grid Layouts**: Modern card-based layouts with flexible responsive grids
 
 ## ⚡ Quick Start
 
@@ -102,8 +146,8 @@ flask --app wsgi run
 
 After running the setup, use these credentials to access the system:
 
-- **Email**: `admin@example.nhs.uk`
-- **Password**: `ChangeMe123!`
+- **Email**: `admin@nhs.uk`
+- **Password**: `admin123`
 - **Role**: Administrator (full system access)
 
 > ⚠️ **Security Note**: Change the default password immediately after first login!
@@ -123,6 +167,11 @@ After running the setup, use these credentials to access the system:
 - NHS number (unique identifier)
 - Full demographics (name, date of birth)
 - Contact information (phone, email)
+- Status tracking (Active, Inactive, Pending, Discharged)
+- Priority levels (Low, Medium, High, Urgent)
+- Medical notes and clinical observations
+- Automatic timestamps (created_at, updated_at)
+- Calculated properties (age, next appointment, total appointments)
 - Appointment history tracking
 
 #### Services
@@ -140,7 +189,7 @@ After running the setup, use these credentials to access the system:
 
 ## 🏗️ Project Structure
 
-```
+```plaintext
 nhs_service_tracker/
 ├── app/                          # Main application package
 │   ├── __init__.py              # Flask application factory
@@ -368,6 +417,9 @@ The application includes comprehensive dummy data for testing:
 - Complete demographics with NHS numbers
 - Varied ages and contact information
 - Realistic names and data
+- Status distribution: Active, Inactive, Pending, Discharged
+- Priority levels: Low, Medium, High, Urgent
+- Medical notes and clinical observations
 
 ### Appointments (200+ records)
 
@@ -408,8 +460,11 @@ The application follows RESTful URL patterns:
 - `GET /patients/` - List patients (with search)
 - `GET /patients/create` - Create patient form
 - `POST /patients/create` - Submit new patient
+- `GET /patients/<id>` - View patient details
 - `GET /patients/<id>/edit` - Edit patient form
 - `POST /patients/<id>/edit` - Update patient
+- `GET /patients/<id>/status` - Edit patient status form
+- `POST /patients/<id>/status` - Update patient status and priority
 - `POST /patients/<id>/delete` - Delete patient
 
 ### Service Management
@@ -459,6 +514,12 @@ flask --app manage seed
 
 ```bash
 # Use different port
+```bash
+
+**Port Already in Use**:
+
+```bash
+# Use different port
 flask --app wsgi run --port 5001
 ```
 
@@ -468,6 +529,9 @@ flask --app wsgi run --port 5001
 2. **Log Debugging**: Check Flask debug output in development mode
 3. **Form Debugging**: Use browser developer tools to inspect form data
 4. **Template Debugging**: Enable Jinja2 debug mode for better error messages
+5. **Patient Status Testing**: Use the dedicated status management interface to test priority and status updates
+6. **Dashboard Testing**: Check real-time statistics by adding/editing patients and appointments
+7. **UI Testing**: Test responsive design across different screen sizes and devices
 
 ## 📝 Contributing
 
@@ -489,15 +553,21 @@ For support, please create an issue on the GitHub repository or contact the deve
 
 ## 🏗️ Future Enhancements
 
+- ✅ **Enhanced Dashboard**: Real-time statistics and patient status analytics (COMPLETED)
+- ✅ **Patient Status Management**: Comprehensive status tracking with priority levels (COMPLETED)
+- ✅ **Modern UI/UX**: Professional NHS-compliant responsive design (COMPLETED)
 - [ ] **Calendar Integration**: Full calendar view for appointments
-- [ ] **Reporting Dashboard**: Analytics and metrics
 - [ ] **Email Notifications**: Appointment reminders and confirmations
 - [ ] **Mobile App**: Native iOS/Android applications
 - [ ] **API Endpoints**: RESTful API for third-party integrations
 - [ ] **Document Management**: Patient file uploads and management
 - [ ] **Audit Trail**: Complete action logging and history tracking
 - [ ] **Multi-language Support**: Internationalization for diverse communities
+- [ ] **Advanced Reporting**: Detailed analytics with export capabilities
+- [ ] **Integration APIs**: Third-party system integrations (NHS Spine, PAS systems)
 
 ---
 
-**Built with ❤️ for the NHS and healthcare professionals**
+## 🏥 Built for Healthcare Professionals
+
+Built with ❤️ for the NHS and healthcare professionals worldwide. This application demonstrates modern web development practices applied to healthcare management, providing a robust, secure, and user-friendly platform for patient care coordination.
