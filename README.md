@@ -263,6 +263,13 @@ coverage report
 coverage html  # Generate HTML report
 ```
 
+### Project Health & Checks
+
+- **Workspace diagnostics**: Latest project-wide error scan reports no issues across code and docs.
+- **Documentation**: All Markdown files (including `docs/ASSESSOR_CHECKLIST.md`) are lint-clean and up to date.
+- **Database**: Alembic migrations apply cleanly; patient status/priority fields are fully migrated and aligned with models.
+- **Tests**: Test suite is present under `tests/` and discoverable with `pytest`; extend and run regularly to validate new features.
+
 ### Database Management
 
 ```bash
@@ -509,12 +516,6 @@ flask --app manage seed
 - Reinstall requirements: `pip install -r requirements.txt`
 - Check Python version compatibility
 - Verify virtual environment activation
-
-**Port Already in Use**:
-
-```bash
-# Use different port
-```bash
 
 **Port Already in Use**:
 
