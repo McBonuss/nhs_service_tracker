@@ -1,7 +1,9 @@
 import os
 
 class BaseConfig:
-    SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key-change-me")
+    # Fixed demo key so the training app runs without external secrets.
+    # This project only uses non-sensitive test data.
+    SECRET_KEY = "dev-demo-key-not-secret"
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL", "sqlite:///dev.db")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     WTF_CSRF_TIME_LIMIT = None
