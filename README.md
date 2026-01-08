@@ -339,6 +339,36 @@ DATABASE_URL=postgresql://username:password@localhost/dbname
 
 The application includes a `Procfile` for Heroku deployment:
 
+#### Quick Deploy Checklist
+
+1. Install and log in to the Heroku CLI:
+	```bash
+	heroku login
+	```
+2. Create a new app (replace with your own name):
+	```bash
+	heroku create your-app-name
+	```
+3. (Recommended) Add a free Postgres database so `DATABASE_URL` is set:
+	```bash
+	heroku addons:create heroku-postgresql:hobby-dev --app your-app-name
+	```
+4. Set basic config (SECRET_KEY is optional for this training app):
+	```bash
+	heroku config:set FLASK_ENV=production --app your-app-name
+	```
+5. Deploy code from `main`:
+	```bash
+	git push heroku main
+	```
+6. Run migrations and seed data on Heroku:
+	```bash
+	heroku run flask --app wsgi db upgrade --app your-app-name
+	heroku run flask --app manage seed --app your-app-name
+	```
+
+#### Full Command Reference
+
 ```bash
 # Install Heroku CLI and login
 heroku login
@@ -346,10 +376,8 @@ heroku login
 # Create Heroku app
 heroku create your-app-name
 
-# Set environment variables
+# Set environment variables (SECRET_KEY optional for training use)
 heroku config:set FLASK_ENV=production
-heroku config:set SECRET_KEY=your-production-secret-key
-heroku config:set DATABASE_URL=your-database-url
 
 # Deploy
 git push heroku main
