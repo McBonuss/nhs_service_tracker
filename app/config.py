@@ -1,10 +1,20 @@
 import os
 
+
 class BaseConfig:
-    # Fixed demo key so the training app runs without external secrets.
-    # This project only uses non-sensitive test data.
-    SECRET_KEY = "dev-demo-key-not-secret"
+    """Base configuration shared across environments.
+
+    Values can be overridden via environment variables loaded from the
+    project-level "env" file (see setup.ps1) or the host environment.
+    """
+
+    # Allow overriding the secret key from the environment while keeping
+    # a sensible default for tests and quick local runs.
+    SECRET_KEY = os.environ.get("SECRET_KEY", "dev-demo-key-not-secret")
+
+    # Prefer DATABASE_URL from the environment; fall back to a local dev DB.
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL", "sqlite:///dev.db")
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     WTF_CSRF_TIME_LIMIT = None
 

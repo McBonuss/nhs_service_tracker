@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from dotenv import load_dotenv
 from .extensions import db, migrate, login_manager, csrf
 from .config import get_config
 from .models import User
@@ -8,7 +9,20 @@ from .views.patients import patients_bp
 from .views.services import services_bp
 from .views.appointments import appointments_bp
 
+
 def create_app(config_name=None):
+    """Application factory.
+
+    Ensures environment variables from the project-level "env" file are
+    loaded even when the app is started directly via wsgi.py (not only
+    through the Flask CLI). This keeps DATABASE_URL and SECRET_KEY
+    consistent with what setup.ps1 configures.
+    """
+
+    # Load variables from the local env file if present; this is a no-op
+    # when the file is missing or when values are already set in os.environ.
+    load_dotenv("env")
+
     app = Flask(__name__)
     app.config.from_object(get_config(config_name))
 
