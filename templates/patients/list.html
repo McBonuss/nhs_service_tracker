@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Patients</h1>
+<form method="get">
+  <input type="text" name="q" value="{{ query }}" placeholder="Search patients" />
+  <button type="submit">Search</button>
+  <a href="{% url 'patients_create' %}">Add Patient</a>
+</form>
+<table>
+  <thead>
+    <tr>
+      <th>NHS Number</th>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Priority</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for patient in patients %}
+    <tr>
+      <td>{{ patient.nhs_number }}</td>
+      <td><a href="{% url 'patients_detail' patient.id %}">{{ patient.first_name }} {{ patient.last_name }}</a></td>
+      <td>{{ patient.status|title }}</td>
+      <td>{{ patient.priority|title }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4">No patients found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

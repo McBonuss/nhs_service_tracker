@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ patient.first_name }} {{ patient.last_name }}</h1>
+<p>NHS Number: {{ patient.nhs_number }}</p>
+<p>Status: {{ patient.status|title }}</p>
+<p>Priority: {{ patient.priority|title }}</p>
+<p>Date of Birth: {{ patient.date_of_birth }}</p>
+<p>Age: {{ patient.age }}</p>
+<p>Contact Phone: {{ patient.contact_phone|default:"-" }}</p>
+<p>Contact Email: {{ patient.contact_email|default:"-" }}</p>
+<p>Medical Notes: {{ patient.medical_notes|default:"-" }}</p>
+
+<p><a href="{% url 'patients_edit' patient.id %}">Edit patient</a></p>
+{% endblock %}

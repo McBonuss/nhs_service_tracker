@@ -1,6 +1,6 @@
 Login Credentials:
-Email: admin@example.nhs.uk
-Password: ChangeMe123!
+Email: admin@nhs.uk
+Password: admin123
 User Details:
 Full Name: Admin User
 Role: Admin (with full administrative privileges)

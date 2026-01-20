@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Appointments</h1>
+<a href="{% url 'appointments_create' %}">Schedule Appointment</a>
+<table>
+  <thead>
+    <tr>
+      <th>Patient</th>
+      <th>Service</th>
+      <th>Scheduled For</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for appointment in appointments %}
+    <tr>
+      <td>{{ appointment.patient }}</td>
+      <td>{{ appointment.service }}</td>
+      <td>{{ appointment.scheduled_for|date:"d M Y H:i" }}</td>
+      <td>{{ appointment.status|title }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4">No appointments found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

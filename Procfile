@@ -1,1 +1,1 @@
-web: gunicorn wsgi:app
+web: gunicorn nhs_service_tracker.wsgi:application

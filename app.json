@@ -1,0 +1,20 @@
+{
+  "name": "nhs-service-tracker",
+  "description": "Flask app for NHS service tracking (training/demo)",
+  "repository": "https://github.com/McBonuss/nhs_service_tracker",
+  "keywords": ["flask", "nhs", "demo"],
+  "env": {
+    "FLASK_ENV": {
+      "description": "Flask environment",
+      "value": "production"
+    },
+    "SECRET_KEY": {
+      "description": "Signing key for sessions (can be any random string)",
+      "generator": "secret"
+    }
+  },
+  "addons": ["heroku-postgresql:essential-0"],
+  "scripts": {
+    "postdeploy": "python manage.py migrate && python manage.py seed"
+  }
+}

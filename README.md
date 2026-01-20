@@ -1,6 +1,6 @@
 # NHS Service Tracker
 
-A comprehensive Flask web application for managing NHS patients, services, and appointments. Built with modern web technologies and designed for healthcare professionals to efficiently track and manage patient care workflows with enhanced patient status management and detailed analytics.
+A comprehensive Django web application for managing NHS patients, services, and appointments. Built with modern web technologies and designed for healthcare professionals to efficiently track and manage patient care workflows with enhanced patient status management and detailed analytics.
 
 ## 🏥 Overview
 
@@ -53,7 +53,7 @@ The NHS Service Tracker is a full-featured healthcare management system that pro
 ## 📋 Requirements
 
 - **Python 3.8+**
-- **Flask 3.0+**
+- **Django 5.0+**
 - **SQLite** (default) or **PostgreSQL** (production)
 - **Modern web browser** (Chrome, Firefox, Safari, Edge)
 
@@ -130,16 +130,16 @@ pip install -r requirements.txt
 cp .env.example .env  # Edit with your configuration
 
 # Initialize database
-flask --app wsgi db upgrade
+python manage.py migrate
 
 # Seed initial data
-flask --app manage seed
+python manage.py seed
 
 # Optional: Add dummy data
-flask --app manage seed-data
+python manage.py seed_data
 
 # Run development server
-flask --app wsgi run
+python manage.py runserver
 ```
 
 ## 🔐 Default Login Credentials
@@ -192,12 +192,11 @@ After running the setup, use these credentials to access the system:
 ```plaintext
 nhs_service_tracker/
 ├── app/                          # Main application package
-│   ├── __init__.py              # Flask application factory
-│   ├── config.py                # Configuration management
-│   ├── extensions.py            # Flask extensions setup
-│   ├── forms.py                 # WTForms form classes
-│   ├── models.py                # SQLAlchemy database models
-│   ├── security.py              # Role-based access decorators
+│   ├── __init__.py              # Django project package
+│   ├── settings.py              # Django settings
+│   ├── urls.py                  # URL routing
+│   ├── wsgi.py                  # WSGI entry point
+│   ├── asgi.py                  # ASGI entry point
 │   ├── static/                  # Static assets
 │   │   ├── css/styles.css       # NHS-compliant styling
 │   │   └── js/app.js           # Frontend JavaScript
@@ -208,7 +207,7 @@ nhs_service_tracker/
 │   │   ├── patients/           # Patient management templates
 │   │   ├── services/           # Service management templates
 │   │   └── appointments/       # Appointment templates
-│   └── views/                   # Flask blueprints/routes
+│   └── tracker/                 # Django app (views, models, forms)
 │       ├── __init__.py
 │       ├── auth.py             # Authentication routes
 │       ├── main.py             # Dashboard routes
@@ -274,27 +273,20 @@ coverage html  # Generate HTML report
 
 ```bash
 # Create new migration
-flask --app wsgi db migrate -m "Description of changes"
+python manage.py makemigrations
 
 # Apply migrations
-flask --app wsgi db upgrade
-
-# Downgrade migration
-flask --app wsgi db downgrade
-
-# Reset database (development only)
-flask --app wsgi db downgrade base
-flask --app wsgi db upgrade
+python manage.py migrate
 ```
 
 ### Data Management
 
 ```bash
-# Seed basic roles and admin user
-flask --app manage seed
+# Seed basic admin user
+python manage.py seed
 
 # Populate with comprehensive dummy data
-flask --app manage seed-data
+python manage.py seed_data
 
 # Verify database contents
 python verify_data.py
@@ -307,9 +299,7 @@ python verify_data.py
 Create a `.env` file in the project root (optional for this training app):
 
 ```env
-FLASK_APP=wsgi.py
-FLASK_ENV=development
-FLASK_DEBUG=1
+DJANGO_SETTINGS_MODULE=nhs_service_tracker.settings
 DATABASE_URL=sqlite:///nhs_tracker.db
 ```
 
@@ -337,18 +327,15 @@ DATABASE_URL=postgresql://username:password@localhost/dbname
 
 ### Heroku Deployment
 
-The application includes a `Procfile` for Heroku deployment:
+The application includes a `Procfile`, a `runtime.txt`, and an `app.json` to make Heroku setup simple.
 
-#### Quick Deploy Checklist
+#### One-click Deploy (Recommended)
 
-1. Install and log in to the Heroku CLI (`heroku login`).
-2. Create a new app with a unique name (`heroku create your-app-name`).
-3. (Recommended) Add a free Postgres database so `DATABASE_URL` is set (`heroku addons:create heroku-postgresql:hobby-dev --app your-app-name`).
-4. Set basic config (SECRET_KEY is optional for this training app) (`heroku config:set FLASK_ENV=production --app your-app-name`).
-5. Deploy code from `main` (`git push heroku main`).
-6. Run migrations and seed data on Heroku (`heroku run flask --app wsgi db upgrade --app your-app-name` and `heroku run flask --app manage seed --app your-app-name`).
+1. Create the app from this repo in the Heroku Dashboard.
+2. The `app.json` will auto-create a Postgres database, generate `SECRET_KEY`, and run migrations + seeding.
+3. Open the app and sign in with the seeded admin user.
 
-#### Full Command Reference
+#### CLI Deploy
 
 ```bash
 # Install Heroku CLI and login
@@ -357,17 +344,18 @@ heroku login
 # Create Heroku app
 heroku create your-app-name
 
-# Set environment variables (SECRET_KEY optional for training use)
-heroku config:set FLASK_ENV=production
+# Add Postgres (sets DATABASE_URL)
+heroku addons:create heroku-postgresql:essential-0 --app your-app-name
+
+# Set environment variables
+heroku config:set DEBUG=0 --app your-app-name
 
 # Deploy
 git push heroku main
 
-# Run migrations
-heroku run flask --app wsgi db upgrade
-
-# Seed initial data
-heroku run flask --app manage seed
+# Run migrations and seed
+heroku run python manage.py migrate --app your-app-name
+heroku run python manage.py seed --app your-app-name
 ```
 
 ### Production Deployment
@@ -384,8 +372,8 @@ For production servers:
 ## 🔒 Security Features
 
 - **Password Security**: Werkzeug password hashing
-- **Session Management**: Secure Flask-Login sessions
-- **CSRF Protection**: Flask-WTF CSRF tokens
+- **Session Management**: Django authentication sessions
+- **CSRF Protection**: Django CSRF middleware
 - **Role-Based Access**: Custom decorators for authorization
 - **Input Validation**: Comprehensive form validation
 - **SQL Injection Prevention**: SQLAlchemy ORM parameterized queries
@@ -509,8 +497,8 @@ The application follows RESTful URL patterns:
 ```bash
 # Reset database
 rm instance/*.db
-flask --app wsgi db upgrade
-flask --app manage seed
+python manage.py migrate
+python manage.py seed
 ```
 
 **Permission Errors**:
@@ -529,13 +517,13 @@ flask --app manage seed
 
 ```bash
 # Use different port
-flask --app wsgi run --port 5001
+python manage.py runserver 5001
 ```
 
 ### Development Tips
 
 1. **Database Debugging**: Use `sqlite3` CLI or DB Browser for SQLite
-2. **Log Debugging**: Check Flask debug output in development mode
+2. **Log Debugging**: Check Django debug output in development mode
 3. **Form Debugging**: Use browser developer tools to inspect form data
 4. **Template Debugging**: Enable Jinja2 debug mode for better error messages
 5. **Patient Status Testing**: Use the dedicated status management interface to test priority and status updates

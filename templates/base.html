@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NHS Service Tracker</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <nav aria-label="Primary">
+    <ul class="nav">
+      <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+      <li><a href="{% url 'patients_list' %}">Patients</a></li>
+      <li><a href="{% url 'services_list' %}">Services</a></li>
+      <li><a href="{% url 'appointments_list' %}">Appointments</a></li>
+      {% if user.is_authenticated %}
+      <li class="right"><span aria-live="polite">Signed in as {{ user.first_name|default:user.username }}</span></li>
+      <li><a href="{% url 'logout' %}">Sign out</a></li>
+      {% else %}
+      <li class="right"><a href="{% url 'login' %}">Sign in</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+
+  <main id="main" tabindex="-1">
+    {% if messages %}
+      <div role="status" aria-live="polite">
+        {% for message in messages %}
+          <div class="alert {{ message.tags }}" tabindex="-1">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

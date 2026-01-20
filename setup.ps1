@@ -3,8 +3,8 @@
     Automated first-run setup for the NHS Service Tracker Flask project.
 .DESCRIPTION
     Creates a Python virtual environment, installs dependencies,
-    generates a secure SECRET_KEY, initialises the database,
-    seeds roles and an admin user, and launches the Flask dev server.
+    generates a SECRET_KEY, initialises the database,
+    seeds an admin user, and launches the Django dev server.
 #>
 
 Write-Host "=== NHS Service Tracker: Automated Setup (Windows PowerShell) ===" -ForegroundColor Cyan
@@ -42,22 +42,19 @@ foreach ($package in $packages) {
     }
 }
 
-# 4. Create .env with secure key
+# 4. Create env with key
 if (!(Test-Path ".\env")) {
-    Write-Host "[4/7] Creating .env file with secure SECRET_KEY..." -ForegroundColor Yellow
-    
-    # Generate secure secret key using Python
-    $secret = python -c "import secrets; print(secrets.token_hex(32))"
-    
-    # Create .env file with default configuration
+    Write-Host "[4/7] Creating env file with SECRET_KEY..." -ForegroundColor Yellow
+
+    # Generate a key using Python
+    $secret = python -c "import secrets; print(secrets.token_urlsafe(50))"
+
     $envContent = @"
-FLASK_APP=wsgi.py
-FLASK_ENV=development
-FLASK_DEBUG=1
+DJANGO_SETTINGS_MODULE=nhs_service_tracker.settings
 SECRET_KEY=$($secret.Trim())
 DATABASE_URL=sqlite:///nhs_tracker.db
 "@
-    
+
     $envContent | Set-Content ".\env"
 } else {
     Write-Host "[4/7] .env already exists, skipping." -ForegroundColor Gray
@@ -71,35 +68,25 @@ if (Test-Path ".\env") {
 }
 Write-Host "------`n"
 
-# 5. Database init + migrate + upgrade
-Write-Host "[5/7] Initialising / migrating database (SQLite by default)..." -ForegroundColor Yellow
+# 5. Database migrate
+Write-Host "[5/7] Migrating database (SQLite by default)..." -ForegroundColor Yellow
 $pythonExe = ".venv\Scripts\python.exe"
-try {
-    & $pythonExe -m flask --app wsgi db init
-} catch {
-    Write-Host "Migrations folder already exists." -ForegroundColor Gray
-}
-try {
-    & $pythonExe -m flask --app wsgi db migrate -m "init"
-} catch {
-    Write-Host "Migration already exists." -ForegroundColor Gray
-}
-& $pythonExe -m flask --app wsgi db upgrade
+& $pythonExe manage.py migrate
 
-# 6. Seed roles + admin account
-Write-Host "[6/7] Seeding roles and default admin user..." -ForegroundColor Yellow
-& $pythonExe -m flask --app manage seed
+# 6. Seed admin account
+Write-Host "[6/7] Seeding default admin user..." -ForegroundColor Yellow
+& $pythonExe manage.py seed
 
 # 6b. Optional: Seed dummy data
 Write-Host "[6b/7] Would you like to populate with dummy data? (Y/N)" -ForegroundColor Cyan
 $seedDummy = Read-Host
 if ($seedDummy -eq "Y" -or $seedDummy -eq "y") {
     Write-Host "Seeding comprehensive dummy data..." -ForegroundColor Yellow
-    & $pythonExe -m flask --app manage seed-data
+    & $pythonExe manage.py seed_data
 } else {
     Write-Host "Skipping dummy data seeding." -ForegroundColor Gray
 }
 
 # 7. Launch dev server
-Write-Host "[7/7] Starting Flask dev server on http://127.0.0.1:5000 ..." -ForegroundColor Green
-& $pythonExe -m flask --app wsgi run
+Write-Host "[7/7] Starting Django dev server on http://127.0.0.1:8000 ..." -ForegroundColor Green
+& $pythonExe manage.py runserver
