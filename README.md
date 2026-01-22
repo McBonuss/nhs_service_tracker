@@ -524,6 +524,32 @@ python manage.py runserver 5001
 6. **Dashboard Testing**: Check real-time statistics by adding/editing patients and appointments
 7. **UI Testing**: Test responsive design across different screen sizes and devices
 
+## 👤 User Guide
+
+### Getting Started
+
+1. Sign in with your administrator account.
+2. Review the dashboard for key totals and upcoming activity.
+3. Use the navigation bar to access Patients, Services, and Appointments.
+
+### Managing Patients
+
+- Add patients from Patients → Add Patient.
+- Use search to find patients by name or NHS number.
+- Open a patient record to view details and appointment history.
+- Update status/priority to reflect current care needs.
+
+### Managing Services
+
+- Add or update services from Services → Add Service.
+- Keep descriptions clear so clinicians can pick the right service.
+
+### Managing Appointments
+
+- Schedule appointments from Appointments → Schedule Appointment.
+- Review upcoming appointments on the dashboard.
+- Update or cancel appointments as needed.
+
 ## 📝 Contributing
 
 1. Fork the repository
