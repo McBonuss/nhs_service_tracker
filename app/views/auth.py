@@ -12,6 +12,8 @@ auth_bp = Blueprint('auth', __name__)
 def _schema_ready():
     try:
         inspector = inspect(db.engine)
+        if not inspector.has_table("user"):
+            return False
         if not inspector.has_table("patient"):
             return False
         columns = {col["name"] for col in inspector.get_columns("patient")}
@@ -26,13 +28,16 @@ def login():
         return redirect(url_for('main.index'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data.lower()).first()
+        if not _schema_ready():
+            flash('Database schema is out of date. Please run migrations before signing in.', 'warning')
+            return redirect(url_for('auth.login'))
+        try:
+            user = User.query.filter_by(email=form.email.data.lower()).first()
+        except SQLAlchemyError:
+            flash('Database is not ready. Please run migrations before signing in.', 'warning')
+            return redirect(url_for('auth.login'))
         if user and check_password_hash(user.password_hash, form.password.data):
             login_user(user)
-            if not _schema_ready():
-                logout_user()
-                flash('Database schema is out of date. Please run migrations before signing in.', 'warning')
-                return redirect(url_for('auth.login'))
             flash('Signed in successfully.', 'success')
             next_url = request.args.get('next') or url_for('main.index')
             return redirect(next_url)
