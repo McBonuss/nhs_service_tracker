@@ -1,16 +1,13 @@
 import pytest
-from app import create_app
-from app.extensions import db
+from django.contrib.auth.models import User
+
 
 @pytest.fixture()
-def app():
-    app = create_app('testing')
-    with app.app_context():
-        db.create_all()
-        yield app
-        db.session.remove()
-        db.drop_all()
-
-@pytest.fixture()
-def client(app):
-    return app.test_client()
+def user(db):
+    return User.objects.create_user(
+        username="admin@example.nhs.uk",
+        email="admin@example.nhs.uk",
+        password="ChangeMe123!",
+        first_name="Admin",
+        last_name="User",
+    )

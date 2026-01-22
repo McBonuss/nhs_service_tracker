@@ -1,17 +1,31 @@
-def test_register_and_login(client, app):
-    rv = client.post('/auth/register', data={
-        'full_name': 'Test User',
-        'email': 'test@example.nhs.uk',
-        'password': 'Secret123!'
-    }, follow_redirects=True)
-    assert b'Account created' in rv.data
+import pytest
 
-    rv = client.post('/auth/login', data={
-        'email': 'test@example.nhs.uk',
-        'password': 'Secret123!'
-    }, follow_redirects=True)
-    assert b'Signed in successfully' in rv.data
+
+@pytest.mark.django_db
+def test_register_and_login(client):
+    rv = client.post(
+        "/register/",
+        data={
+            "full_name": "Test User",
+            "email": "test@example.nhs.uk",
+            "password1": "Secret123!",
+            "password2": "Secret123!",
+        },
+        follow_redirects=True,
+    )
+    assert b"Account created" in rv.content
+
+    rv = client.post(
+        "/login/",
+        data={
+            "username": "test@example.nhs.uk",
+            "password": "Secret123!",
+        },
+        follow_redirects=True,
+    )
+    assert b"Signed in successfully" in rv.content
+
 
 def test_skip_link_present(client):
-    rv = client.get('/', follow_redirects=True)
-    assert b'Skip to content' in rv.data
+    rv = client.get("/login/")
+    assert b"Skip to content" in rv.content
