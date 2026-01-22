@@ -3,13 +3,22 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Count, Q
-from django.db import OperationalError, ProgrammingError
+from django.db import OperationalError, ProgrammingError, connection
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from datetime import timedelta
 
 from .forms import AppointmentForm, LoginForm, PatientForm, RegisterForm, ServiceForm
 from .models import Appointment, Patient, Service
+
+
+def _auth_schema_ready():
+    try:
+        tables = set(connection.introspection.table_names())
+        required = {"auth_user", "django_session"}
+        return required.issubset(tables)
+    except (OperationalError, ProgrammingError):
+        return False
 
 
 @login_required
@@ -90,6 +99,12 @@ def login_view(request):
         return redirect("dashboard")
     form = LoginForm(request, data=request.POST or None)
     if request.method == "POST" and form.is_valid():
+        if not _auth_schema_ready():
+            messages.error(
+                request,
+                "Database is not ready. Run migrations before signing in.",
+            )
+            return render(request, "auth/login.html", {"form": form})
         try:
             username = form.cleaned_data.get("username").lower()
             password = form.cleaned_data.get("password")
@@ -113,6 +128,12 @@ def register_view(request):
         return redirect("dashboard")
     form = RegisterForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
+        if not _auth_schema_ready():
+            messages.error(
+                request,
+                "Database is not ready. Run migrations before creating an account.",
+            )
+            return render(request, "auth/register.html", {"form": form})
         try:
             if User.objects.filter(username=form.cleaned_data["email"].lower()).exists():
                 messages.warning(request, "Email already registered.")
