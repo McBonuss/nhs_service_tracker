@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Count, Q
+from django.db import OperationalError, ProgrammingError
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from datetime import timedelta
@@ -89,14 +90,21 @@ def login_view(request):
         return redirect("dashboard")
     form = LoginForm(request, data=request.POST or None)
     if request.method == "POST" and form.is_valid():
-        username = form.cleaned_data.get("username").lower()
-        password = form.cleaned_data.get("password")
-        user = authenticate(request, username=username, password=password)
-        if user:
-            login(request, user)
-            messages.success(request, "Signed in successfully.")
-            return redirect("dashboard")
-        messages.error(request, "Invalid credentials.")
+        try:
+            username = form.cleaned_data.get("username").lower()
+            password = form.cleaned_data.get("password")
+            user = authenticate(request, username=username, password=password)
+        except (OperationalError, ProgrammingError):
+            messages.error(
+                request,
+                "Database is not ready. Run migrations before signing in.",
+            )
+        else:
+            if user:
+                login(request, user)
+                messages.success(request, "Signed in successfully.")
+                return redirect("dashboard")
+            messages.error(request, "Invalid credentials.")
     return render(request, "auth/login.html", {"form": form})
 
 
@@ -105,13 +113,19 @@ def register_view(request):
         return redirect("dashboard")
     form = RegisterForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
-        if User.objects.filter(username=form.cleaned_data["email"].lower()).exists():
-            messages.warning(request, "Email already registered.")
-        else:
-            user = form.save()
-            login(request, user)
-            messages.success(request, "Account created.")
-            return redirect("dashboard")
+        try:
+            if User.objects.filter(username=form.cleaned_data["email"].lower()).exists():
+                messages.warning(request, "Email already registered.")
+            else:
+                user = form.save()
+                login(request, user)
+                messages.success(request, "Account created.")
+                return redirect("dashboard")
+        except (OperationalError, ProgrammingError):
+            messages.error(
+                request,
+                "Database is not ready. Run migrations before creating an account.",
+            )
     return render(request, "auth/register.html", {"form": form})
 
 
