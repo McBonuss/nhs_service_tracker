@@ -16,9 +16,9 @@ def test_patient_crud(client, user):
             "status": "active",
             "priority": "medium",
         },
-        follow_redirects=True,
+        follow=True,
     )
-    assert b"Patient created" in rv.content
+    assert b"Patient created." in rv.content
 
     rv = client.get("/patients/?q=Brown")
     assert b"Brown" in rv.content

@@ -241,7 +241,7 @@ nhs_service_tracker/
 pytest
 
 # Run with coverage
-pytest --cov=app
+pytest --cov=tracker
 
 # Run specific test file
 pytest tests/test_models.py
@@ -254,7 +254,7 @@ pytest -v
 
 ```bash
 # Lint code
-flake8 app/
+flake8 tracker/ nhs_service_tracker/ tests/
 
 # Check test coverage
 coverage run -m pytest
@@ -266,7 +266,7 @@ coverage html  # Generate HTML report
 
 - **Workspace diagnostics**: Latest project-wide error scan reports no issues across code and docs.
 - **Documentation**: All Markdown files (including `docs/ASSESSOR_CHECKLIST.md`) are lint-clean and up to date.
-- **Database**: Alembic migrations apply cleanly; patient status/priority fields are fully migrated and aligned with models.
+- **Database**: Django migrations apply cleanly; patient status/priority fields are fully migrated and aligned with models.
 - **Tests**: Test suite is present under `tests/` and discoverable with `pytest`; extend and run regularly to validate new features.
 
 ### Database Management
@@ -303,11 +303,10 @@ DJANGO_SETTINGS_MODULE=nhs_service_tracker.settings
 DATABASE_URL=sqlite:///nhs_tracker.db
 ```
 
-### Configuration Classes
+### Django Settings
 
-- **DevelopmentConfig**: Debug enabled, SQLite database
-- **TestingConfig**: In-memory SQLite, CSRF disabled for testing
-- **ProductionConfig**: Debug disabled, PostgreSQL recommended
+- **Settings module**: `nhs_service_tracker.settings`
+- **Environment file**: `env` (optional) is loaded for local overrides
 
 ### Database Configuration
 

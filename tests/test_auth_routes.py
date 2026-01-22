@@ -11,9 +11,9 @@ def test_register_and_login(client):
             "password1": "Secret123!",
             "password2": "Secret123!",
         },
-        follow_redirects=True,
+        follow=True,
     )
-    assert b"Account created" in rv.content
+    assert b"Account created." in rv.content
 
     rv = client.post(
         "/login/",
@@ -21,9 +21,9 @@ def test_register_and_login(client):
             "username": "test@example.nhs.uk",
             "password": "Secret123!",
         },
-        follow_redirects=True,
+        follow=True,
     )
-    assert b"Signed in successfully" in rv.content
+    assert b"NHS Service Tracker Dashboard" in rv.content
 
 
 def test_skip_link_present(client):
