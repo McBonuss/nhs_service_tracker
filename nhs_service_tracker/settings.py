@@ -7,7 +7,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / "env")
 
-SECRET_KEY = os.environ.get("SECRET_KEY", "dev-insecure-key")
+SECRET_KEY = os.environ.get("SECRET_KEY")
+if not SECRET_KEY:
+    import secrets
+
+    SECRET_KEY = secrets.token_urlsafe(50)
 DEBUG = os.environ.get("DEBUG", "0") == "1"
 ALLOWED_HOSTS = ["*"]
 
