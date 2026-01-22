@@ -43,7 +43,7 @@ The NHS Service Tracker is a full-featured healthcare management system that pro
 
 ### Technical Features
 
-- ✅ **Database Migrations**: Automated schema management with Alembic
+- ✅ **Database Migrations**: Automated schema management with Django migrations
 - ✅ **Security**: CSRF protection, secure password hashing, session management
 - ✅ **Testing**: Comprehensive test suite with pytest and coverage reporting
 - ✅ **Production Ready**: Gunicorn WSGI server configuration
@@ -365,12 +365,12 @@ For production servers:
 
 ## 🔒 Security Features
 
-- **Password Security**: Werkzeug password hashing
+- **Password Security**: Django password hashing
 - **Session Management**: Django authentication sessions
 - **CSRF Protection**: Django CSRF middleware
-- **Role-Based Access**: Custom decorators for authorization
+- **Role-Based Access**: Django decorators for authorization
 - **Input Validation**: Comprehensive form validation
-- **SQL Injection Prevention**: SQLAlchemy ORM parameterized queries
+- **SQL Injection Prevention**: Django ORM parameterized queries
 - **Environment Isolation**: Separate configs for dev/test/prod
 
 ## 🎯 User Roles
