@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Automated first-run setup for the NHS Service Tracker Flask project.
+    Automated first-run setup for the NHS Service Tracker Django project.
 .DESCRIPTION
     Creates a Python virtual environment, installs dependencies,
     generates a SECRET_KEY, initialises the database,

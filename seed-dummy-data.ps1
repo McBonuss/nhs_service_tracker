@@ -14,7 +14,7 @@ Write-Host "Activating virtual environment..." -ForegroundColor Yellow
 
 # Seed comprehensive dummy data
 Write-Host "Populating database with dummy data..." -ForegroundColor Yellow
-.venv\Scripts\python.exe -m flask --app manage seed-data
+.venv\Scripts\python.exe manage.py seed_data
 
 Write-Host "`n✅ Dummy data seeding completed!" -ForegroundColor Green
 Write-Host "Your NHS Service Tracker now contains:" -ForegroundColor Cyan

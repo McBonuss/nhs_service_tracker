@@ -6,5 +6,5 @@ Full Name: Admin User
 Role: Admin (with full administrative privileges)
 How to Access:
 After running the setup script successfully
-Navigate to http://127.0.0.1:5000 in your browser
-Go to the login page (usually /auth/login)
+Navigate to http://127.0.0.1:8000 in your browser
+Go to the login page (/login/)
