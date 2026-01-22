@@ -191,30 +191,25 @@ After running the setup, use these credentials to access the system:
 
 ```plaintext
 nhs_service_tracker/
-├── app/                          # Main application package
-│   ├── __init__.py              # Django project package
+├── nhs_service_tracker/          # Django project package
 │   ├── settings.py              # Django settings
 │   ├── urls.py                  # URL routing
 │   ├── wsgi.py                  # WSGI entry point
-│   ├── asgi.py                  # ASGI entry point
-│   ├── static/                  # Static assets
-│   │   ├── css/styles.css       # NHS-compliant styling
-│   │   └── js/app.js           # Frontend JavaScript
-│   ├── templates/               # Jinja2 templates
-│   │   ├── base.html           # Base template with navigation
-│   │   ├── index.html          # Dashboard homepage
-│   │   ├── auth/               # Authentication templates
-│   │   ├── patients/           # Patient management templates
-│   │   ├── services/           # Service management templates
-│   │   └── appointments/       # Appointment templates
-│   └── tracker/                 # Django app (views, models, forms)
-│       ├── __init__.py
-│       ├── auth.py             # Authentication routes
-│       ├── main.py             # Dashboard routes
-│       ├── patients.py         # Patient management
-│       ├── services.py         # Service management
-│       └── appointments.py     # Appointment scheduling
-├── migrations/                  # Database migration files
+│   └── asgi.py                  # ASGI entry point
+├── tracker/                      # Django app (views, models, forms)
+│   ├── __init__.py
+│   ├── views.py                 # Views and route handlers
+│   ├── models.py                # Django models
+│   ├── forms.py                 # Django forms
+│   └── migrations/              # Django migration files
+├── templates/                    # Django templates
+│   ├── base.html                # Base template with navigation
+│   ├── index.html               # Dashboard homepage
+│   ├── auth/                    # Authentication templates
+│   ├── patients/                # Patient management templates
+│   ├── services/                # Service management templates
+│   └── appointments/            # Appointment templates
+├── static/                       # Static assets (CSS/JS)
 ├── tests/                       # Test suite
 │   ├── conftest.py             # Test configuration
 │   ├── test_auth_routes.py     # Authentication tests
@@ -524,7 +519,7 @@ python manage.py runserver 5001
 1. **Database Debugging**: Use `sqlite3` CLI or DB Browser for SQLite
 2. **Log Debugging**: Check Django debug output in development mode
 3. **Form Debugging**: Use browser developer tools to inspect form data
-4. **Template Debugging**: Enable Jinja2 debug mode for better error messages
+4. **Template Debugging**: Enable Django template debug mode for better error messages
 5. **Patient Status Testing**: Use the dedicated status management interface to test priority and status updates
 6. **Dashboard Testing**: Check real-time statistics by adding/editing patients and appointments
 7. **UI Testing**: Test responsive design across different screen sizes and devices
