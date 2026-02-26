@@ -22,16 +22,14 @@ A Django web application for managing NHS patients, services, and appointments. 
 
 The NHS Service Tracker provides:
 
-- Enhanced patient management
-- Patient status tracking (Active, Inactive, Discharged, Deceased)
-- Priority management (Low, Medium, High, Urgent)
-- Advanced dashboard metrics
+- Patient management with status and priority fields
+- Dashboard totals for patients, services, and appointments
 - Service management
 - Appointment scheduling
 - Secure authentication
-- Modern responsive NHS-style design
+- Responsive NHS-style design
 
-This project solves operational fragmentation in small NHS clinics by consolidating patients, services, and appointments into a single, secure system.
+This project consolidates patients, services, and appointments into a single system so staff can manage care workflows without spreadsheets or disconnected notes.
 
 ## UX
 
@@ -76,21 +74,19 @@ Wireframe notes are documented in [docs/wireframes/README.md](docs/wireframes/RE
 
 ### Core Functionality
 
-- Enhanced patient records with NHS number tracking
-- Patient status management
-- Priority levels with color-coded badges
-- Advanced dashboard analytics
-- Appointment scheduling system
-- Service management module
+- Patient records with NHS number tracking
+- Patient status and priority management
+- Dashboard summary cards
+- Appointment scheduling
+- Service management
 - Secure Django authentication
-- Search and filter across entities
+- Patient search by name or NHS number
 - Responsive NHS-style UI
 
-### Enhanced Features
+### Additional Features
 
-- Real-time patient status distribution
 - Calculated fields (age, next appointment)
-- Interactive card-based dashboard
+- Confirmation step for delete actions
 - Data validation and secure form handling
 
 ## Data Model
@@ -140,7 +136,6 @@ Relationships allow:
 
 - HTML5
 - CSS3 (custom)
-- JavaScript (vanilla)
 
 ### Testing & Quality
 
@@ -156,7 +151,7 @@ Relationships allow:
 - Authentication flows
 - CRUD operations
 - Model validation
-- Security checks
+- Security checks for protected routes
 
 Run tests:
 
@@ -199,7 +194,7 @@ heroku run python manage.py migrate
 - Django authentication
 - CSRF protection
 - Password hashing
-- `login_required` decorators
+- `login_required` decorators on CRUD routes
 - ORM SQL injection protection
 - Environment-based `SECRET_KEY` storage
 
