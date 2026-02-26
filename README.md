@@ -166,6 +166,44 @@ Relationships allow:
 - Sample patients with realistic NHS numbers and contact data
 - Example appointments across past and upcoming dates
 
+## Code Snippets
+
+### Model Relationships
+
+```python
+class Appointment(models.Model):
+	patient = models.ForeignKey(Patient, related_name="appointments", on_delete=models.CASCADE)
+	service = models.ForeignKey(Service, on_delete=models.CASCADE)
+	scheduled_for = models.DateTimeField()
+	location = models.CharField(max_length=120)
+	status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="scheduled")
+```
+
+### Protected CRUD View
+
+```python
+@login_required
+def patients_edit(request, pk):
+	patient = get_object_or_404(Patient, pk=pk)
+	form = PatientForm(request.POST or None, instance=patient)
+	if request.method == "POST" and form.is_valid():
+		form.save()
+		messages.success(request, "Patient updated.")
+		return redirect("patients_detail", pk=patient.pk)
+	return render(request, "patients/form.html", {"form": form, "title": "Edit Patient"})
+```
+
+### Template Form Pattern
+
+```html
+<form method="post" novalidate>
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  {{ form.as_p }}
+  <button type="submit">Save</button>
+</form>
+```
+
 ## Technologies Used
 
 ### Backend
