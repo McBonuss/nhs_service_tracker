@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import sys
 import dj_database_url
 from dotenv import load_dotenv
 from django.core.exceptions import ImproperlyConfigured
@@ -11,9 +12,9 @@ load_dotenv(BASE_DIR / "env")
 DEBUG = os.environ.get("DEBUG", "0") == "1"
 SECRET_KEY = os.environ.get("SECRET_KEY")
 if not SECRET_KEY:
-    if os.environ.get("PYTEST_CURRENT_TEST"):
+    if "pytest" in sys.argv or os.environ.get("PYTEST_CURRENT_TEST"):
         SECRET_KEY = "test-secret-key"
-    elif DEBUG:
+    elif DEBUG or os.environ.get("ENV") != "production":
         SECRET_KEY = "dev-insecure-key-change-me"
     else:
         raise ImproperlyConfigured("SECRET_KEY is required in production.")
