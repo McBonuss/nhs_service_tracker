@@ -60,11 +60,11 @@ DATABASE_URL=sqlite:///nhs_tracker.db
     Write-Host "[4/7] .env already exists, skipping." -ForegroundColor Gray
 }
 
-Write-Host "`nCurrent .env contents:" -ForegroundColor DarkCyan
+Write-Host "`nCurrent env contents:" -ForegroundColor DarkCyan
 if (Test-Path ".\env") {
     Get-Content ".\env"
 } else {
-    Write-Host ".env file not found" -ForegroundColor Red
+    Write-Host "env file not found" -ForegroundColor Red
 }
 Write-Host "------`n"
 

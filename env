@@ -1,4 +1,4 @@
-FLASK_APP=wsgi.py
-FLASK_ENV=development
-FLASK_DEBUG=1
+DJANGO_SETTINGS_MODULE=nhs_service_tracker.settings
+DEBUG=1
+SECRET_KEY=dev-insecure-key-change-me
 DATABASE_URL=sqlite:///nhs_tracker.db

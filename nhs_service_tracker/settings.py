@@ -2,17 +2,21 @@ from pathlib import Path
 import os
 import dj_database_url
 from dotenv import load_dotenv
+from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / "env")
 
+DEBUG = os.environ.get("DEBUG", "0") == "1"
 SECRET_KEY = os.environ.get("SECRET_KEY")
 if not SECRET_KEY:
-    import secrets
-
-    SECRET_KEY = secrets.token_urlsafe(50)
-DEBUG = os.environ.get("DEBUG", "0") == "1"
+    if os.environ.get("PYTEST_CURRENT_TEST"):
+        SECRET_KEY = "test-secret-key"
+    elif DEBUG:
+        SECRET_KEY = "dev-insecure-key-change-me"
+    else:
+        raise ImproperlyConfigured("SECRET_KEY is required in production.")
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
