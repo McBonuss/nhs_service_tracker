@@ -435,23 +435,12 @@ For production servers:
 - **Input Validation**: Comprehensive form validation
 - **SQL Injection Prevention**: Django ORM parameterized queries
 - **Environment Isolation**: Separate configs for dev/test/prod
+- **Secret Key Management**: `SECRET_KEY` stored in environment variables for production
 
-## 🎯 User Roles
+## 🎯 Authentication & Access
 
-### Administrator
-
-- Full system access
-- User management
-- Service management
-- Patient and appointment management
-- System configuration
-
-### Clinician
-
-- Patient management (create, edit, view)
-- Appointment scheduling and management
-- Service viewing
-- Limited administrative functions
+- The app uses Django authentication for sign-in and protects CRUD routes with `login_required`.
+- Administrative tasks (like Django admin access) are handled through Django's built-in staff/superuser flags.
 
 ## 📊 Dummy Data
 
@@ -477,7 +466,7 @@ The application includes comprehensive dummy data for testing:
 - Complete demographics with NHS numbers
 - Varied ages and contact information
 - Realistic names and data
-- Status distribution: Active, Inactive, Pending, Discharged
+- Status distribution: Active, Inactive, Discharged, Deceased
 - Priority levels: Low, Medium, High, Urgent
 - Medical notes and clinical observations
 
@@ -492,11 +481,11 @@ The application includes comprehensive dummy data for testing:
 
 ### Test Coverage
 
-- **Authentication**: Login, registration, logout flows
-- **CRUD Operations**: Create, read, update, delete for all entities
-- **Database Models**: Relationships, constraints, validations
+- **Authentication**: Login and registration flows
+- **CRUD Operations**: Create, read, update, and delete for core entities
+- **Database Models**: Relationships and calculated fields
 - **Security**: Authentication checks and form validation
-- **Integration**: End-to-end user workflows
+- **Manual Testing**: Documented in [TEST_PLAN.md](TEST_PLAN.md)
 
 ### Running Specific Tests
 
