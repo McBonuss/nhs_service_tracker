@@ -9,6 +9,7 @@
       <th>Service</th>
       <th>Scheduled For</th>
       <th>Status</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -18,9 +19,16 @@
       <td>{{ appointment.service }}</td>
       <td>{{ appointment.scheduled_for|date:"d M Y H:i" }}</td>
       <td>{{ appointment.status|title }}</td>
+      <td>
+        <a href="{% url 'appointments_edit' appointment.id %}">Edit</a>
+        <form method="post" action="{% url 'appointments_delete' appointment.id %}" class="inline-form">
+          {% csrf_token %}
+          <button type="submit">Delete</button>
+        </form>
+      </td>
     </tr>
     {% empty %}
-    <tr><td colspan="4">No appointments found.</td></tr>
+    <tr><td colspan="5">No appointments found.</td></tr>
     {% endfor %}
   </tbody>
 </table>
