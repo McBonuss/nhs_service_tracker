@@ -96,6 +96,18 @@ th {
   background: var(--nhs-light);
 }
 
+@media (max-width: 720px) {
+  table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  th,
+  td {
+    white-space: nowrap;
+  }
+}
+
 
 .stats-grid,
 .grid {

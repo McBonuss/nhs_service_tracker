@@ -11,6 +11,8 @@ This document captures automated and manual testing for the NHS Service Tracker.
 
 ## Manual Testing
 
+Outcomes are marked "Not run" until verified in the local or deployed environment.
+
 | ID | Area | Steps | Expected Result | Outcome |
 | --- | --- | --- | --- | --- |
 | M1 | Sign in | Open `/login/`, enter valid credentials, submit | User lands on dashboard and sees welcome message | Not run |
