@@ -19,6 +19,30 @@ The NHS Service Tracker is a full-featured healthcare management system that pro
 
 The app helps healthcare staff keep patient, service, and appointment data in one place so they can quickly find records, schedule care, and track priorities. It reduces duplicate entry, improves visibility of upcoming appointments, and provides a clear dashboard view of workload.
 
+## ✅ Rationale
+
+This project was developed to solve a common operational problem in small NHS clinics: patient, service, and appointment data often live in disconnected spreadsheets or notes, which makes scheduling and follow-ups error-prone. A single, consistent system helps staff understand patient status at a glance, prevents missed appointments, and supports efficient day-to-day decision-making.
+
+### Target Audience Needs
+
+- Reception/admin staff need fast patient lookup and accurate appointment booking.
+- Clinicians need reliable access to patient details, priorities, and medical notes.
+- Service managers need a clear list of available services and workload visibility.
+
+### Data Explained
+
+- **Patients** store core demographics, contact details, status, priority, and medical notes.
+- **Services** define the types of care available in the clinic.
+- **Appointments** link a patient to a service at a scheduled time, with status, location, and notes.
+- These relationships allow the app to show recent activity, upcoming appointments, and priority distribution on the dashboard.
+
+### Security Considerations
+
+- **Authentication** is required to access CRUD views, protecting patient data from anonymous access.
+- **CSRF protection** prevents cross-site request forgery on form submissions.
+- **Password hashing and session management** are handled by Django’s built-in security framework.
+- **Environment-based configuration** keeps secrets like `SECRET_KEY` out of the codebase for production deployments.
+
 ### Target Audience
 
 - Clinic administrators who need to manage services and schedules
