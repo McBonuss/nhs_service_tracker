@@ -96,10 +96,6 @@ th {
   background: var(--nhs-light);
 }
 
-.inline-form {
-  display: inline;
-  margin-left: 8px;
-}
 
 .stats-grid,
 .grid {

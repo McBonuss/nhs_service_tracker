@@ -13,8 +13,7 @@
 <p>
 	<a href="{% url 'patients_edit' patient.id %}">Edit patient</a>
 </p>
-<form method="post" action="{% url 'patients_delete' patient.id %}">
-	{% csrf_token %}
-	<button type="submit">Delete patient</button>
-</form>
+<p>
+	<a href="{% url 'patients_delete' patient.id %}">Delete patient</a>
+</p>
 {% endblock %}

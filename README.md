@@ -159,7 +159,10 @@ source .venv/bin/activate
 pip install -r requirements.txt
 
 # Create environment file
-# Create an `env` file in the project root and add SECRET_KEY and DATABASE_URL
+# Windows:
+copy env.example env
+# macOS/Linux:
+cp env.example env
 
 # Initialize database
 python manage.py migrate
@@ -326,7 +329,7 @@ python verify_data.py
 
 ### Environment Variables
 
-Create an `env` file in the project root for local development (the setup script creates this for you):
+Copy `env.example` to `env` in the project root for local development (the setup script creates this for you):
 
 ```env
 DJANGO_SETTINGS_MODULE=nhs_service_tracker.settings
