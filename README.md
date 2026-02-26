@@ -341,7 +341,7 @@ DATABASE_URL=sqlite:///nhs_tracker.db
 ### Django Settings
 
 - **Settings module**: `nhs_service_tracker.settings`
-- **Environment file**: `env` (optional) is loaded for local overrides
+- **Environment file**: `env` is loaded for local overrides (copy from `env.example`)
 
 ### Database Configuration
 
