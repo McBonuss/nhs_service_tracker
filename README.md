@@ -159,7 +159,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 
 # Create environment file
-cp .env.example .env  # Edit with your configuration
+# Create an `env` file in the project root and add SECRET_KEY and DATABASE_URL
 
 # Initialize database
 python manage.py migrate
