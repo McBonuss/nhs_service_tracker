@@ -5,10 +5,12 @@ A Django web application for managing NHS patients, services, and appointments. 
 ## Table of Contents
 
 - [Overview](#overview)
+- [Rationale](#rationale)
 - [UX](#ux)
 - [Wireframes](#wireframes)
 - [Features](#features)
 - [Data Model](#data-model)
+- [Code Snippets](#code-snippets)
 - [Technologies Used](#technologies-used)
 - [Testing](#testing)
 - [Deployment](#deployment)
@@ -30,6 +32,14 @@ The NHS Service Tracker provides:
 - Responsive NHS-style design
 
 This project consolidates patients, services, and appointments into a single system so staff can manage care workflows without spreadsheets or disconnected notes.
+
+## Rationale
+
+- Clinics often rely on spreadsheets for patient lists and appointments, which makes updates inconsistent and auditing difficult.
+- This app keeps core data in a relational structure so patient status and appointment history stay linked.
+- The dashboard provides a quick operational snapshot to reduce time spent gathering totals.
+
+Design decisions were focused on clarity, speed of access, and reduced risk of data entry errors.
 
 ### Requirements
 
