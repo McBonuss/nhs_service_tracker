@@ -99,13 +99,16 @@ def login_view(request):
     if request.user.is_authenticated:
         return redirect("dashboard")
     form = LoginForm(request, data=request.POST or None)
+    redirect_to = request.GET.get("next") or request.POST.get("next")
     if request.method == "POST" and form.is_valid():
         if not _auth_schema_ready():
             messages.error(
                 request,
                 "Database is not ready. Run migrations before signing in.",
             )
-            return render(request, "auth/login.html", {"form": form})
+            return render(
+                request, "auth/login.html", {"form": form, "next": redirect_to}
+            )
         try:
             username = form.cleaned_data.get("username").lower()
             password = form.cleaned_data.get("password")
@@ -119,9 +122,9 @@ def login_view(request):
             if user:
                 login(request, user)
                 messages.success(request, "Signed in successfully.")
-                return redirect("dashboard")
+                return redirect(redirect_to or "dashboard")
             messages.error(request, "Invalid credentials.")
-    return render(request, "auth/login.html", {"form": form})
+    return render(request, "auth/login.html", {"form": form, "next": redirect_to})
 
 
 def register_view(request):
