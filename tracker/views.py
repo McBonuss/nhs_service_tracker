@@ -262,7 +262,9 @@ def services_delete(request, pk):
 
 @login_required
 def appointments_list(request):
-    appointments = Appointment.objects.select_related("patient", "service").order_by("-scheduled_for")
+    appointments = Appointment.objects.select_related("patient", "service").order_by(
+        "-scheduled_for"
+    )
     return render(request, "appointments/list.html", {"appointments": appointments})
 
 
