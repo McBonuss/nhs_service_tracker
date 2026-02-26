@@ -7,7 +7,7 @@ A comprehensive Django web application for managing NHS patients, services, and 
 The NHS Service Tracker is a full-featured healthcare management system that provides:
 
 - **Enhanced Patient Management**: Complete patient records with NHS numbers, demographics, contact information, status tracking, priority levels, and medical notes
-- **Patient Status Management**: Comprehensive status tracking (Active, Inactive, Pending, Discharged) with priority levels (Low, Medium, High, Urgent)
+- **Patient Status Management**: Comprehensive status tracking (Active, Inactive, Discharged, Deceased) with priority levels (Low, Medium, High, Urgent)
 - **Advanced Dashboard**: Real-time statistics showing patient counts, appointment summaries, service usage, and recent activity
 - **Service Management**: Comprehensive NHS service catalog (Cardiology, Mental Health, GP services, etc.)
 - **Appointment Scheduling**: Advanced booking system with status tracking and location management
@@ -52,7 +52,7 @@ The app helps healthcare staff keep patient, service, and appointment data in on
 ### Core Functionality
 
 - ✅ **Enhanced Patient Records**: Create, view, edit, and search patient information with status tracking and priority management
-- ✅ **Patient Status Management**: Track patient status (Active, Inactive, Pending, Discharged) with priority levels and medical notes
+- ✅ **Patient Status Management**: Track patient status (Active, Inactive, Discharged, Deceased) with priority levels and medical notes
 - ✅ **Advanced Dashboard**: Real-time statistics, patient distribution charts, appointment summaries, and recent activity tracking
 - ✅ **Patient Detail Views**: Comprehensive patient profiles with calculated age, appointment history, and status management
 - ✅ **NHS Services**: Manage healthcare services with detailed descriptions
@@ -101,7 +101,7 @@ The app helps healthcare staff keep patient, service, and appointment data in on
 
 ### 👥 Advanced Patient Management
 
-- **Comprehensive Status Tracking**: Active, Inactive, Pending, Discharged with visual indicators
+- **Comprehensive Status Tracking**: Active, Inactive, Discharged, Deceased with visual indicators
 - **Priority Levels**: Low, Medium, High, Urgent with color-coded badges
 - **Medical Notes**: Free-text clinical observations and notes
 - **Detailed Patient Profiles**: Age calculation, appointment history, next appointment tracking
@@ -199,7 +199,7 @@ After running the setup, use these credentials to access the system:
 - NHS number (unique identifier)
 - Full demographics (name, date of birth)
 - Contact information (phone, email)
-- Status tracking (Active, Inactive, Pending, Discharged)
+- Status tracking (Active, Inactive, Discharged, Deceased)
 - Priority levels (Low, Medium, High, Urgent)
 - Medical notes and clinical observations
 - Automatic timestamps (created_at, updated_at)
