@@ -323,6 +323,32 @@ DATABASE_URL=postgresql://username:password@localhost/dbname
 
 The application includes a `Procfile`, a `runtime.txt`, and an `app.json` to make Heroku setup simple.
 
+#### Quick Heroku Setup
+
+```bash
+# Login and create app
+heroku login
+heroku create nhs-service-tracker
+
+# Add Postgres (sets DATABASE_URL)
+heroku addons:create heroku-postgresql:essential-0 --app nhs-service-tracker
+
+# Set required config
+heroku config:set SECRET_KEY="<your-secret-key>" --app nhs-service-tracker
+heroku config:set DEBUG=0 --app nhs-service-tracker
+
+# Deploy
+git push heroku main
+
+# Run migrations and seed data
+heroku run python manage.py migrate --app nhs-service-tracker
+heroku run python manage.py seed --app nhs-service-tracker
+heroku run python manage.py seed_data --app nhs-service-tracker
+
+# View logs
+heroku logs --tail --app nhs-service-tracker
+```
+
 #### One-click Deploy (Recommended)
 
 1. Create the app from this repo in the Heroku Dashboard.
