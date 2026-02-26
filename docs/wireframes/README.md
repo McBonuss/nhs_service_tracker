@@ -11,3 +11,7 @@ Wireframes were created during planning to define structure, navigation, and key
 - Responsive mobile layout
 
 Add exported images or PDFs here if required by assessment.
+
+## Wireframe Image
+
+![Wireframes](wire_frames.png)

@@ -70,6 +70,8 @@ Wireframes were created during the planning phase to define layout, functionalit
 
 Wireframe notes are documented in [docs/wireframes/README.md](docs/wireframes/README.md).
 
+![Wireframes](docs/wireframes/wire_frames.png)
+
 ## Features
 
 ### Core Functionality
