@@ -11,9 +11,41 @@ The NHS Service Tracker is a full-featured healthcare management system that pro
 - **Advanced Dashboard**: Real-time statistics showing patient counts, appointment summaries, service usage, and recent activity
 - **Service Management**: Comprehensive NHS service catalog (Cardiology, Mental Health, GP services, etc.)
 - **Appointment Scheduling**: Advanced booking system with status tracking and location management
-- **User Authentication**: Secure role-based access control with admin and clinician roles
+- **User Authentication**: Secure Django authentication for staff and admin users
 - **Search & Filtering**: Powerful search functionality across all entities
 - **Modern Responsive Design**: Professional NHS-compliant interface with mobile-friendly design
+
+## 🎯 Purpose & Value
+
+The app helps healthcare staff keep patient, service, and appointment data in one place so they can quickly find records, schedule care, and track priorities. It reduces duplicate entry, improves visibility of upcoming appointments, and provides a clear dashboard view of workload.
+
+### Target Audience
+
+- Clinic administrators who need to manage services and schedules
+- Clinicians who need fast access to patient details and appointment info
+- Supervisors who need at-a-glance operational metrics
+
+## 👥 User Stories
+
+- As a receptionist, I can create a new patient record so the patient can be booked in.
+- As a clinician, I can edit a patient record to keep medical notes up to date.
+- As an admin, I can add or remove services to keep the catalog current.
+- As a scheduler, I can create, edit, or cancel appointments and see changes immediately.
+- As a manager, I can view dashboard summaries to understand workload and priorities.
+
+## 🎨 UX & Design
+
+- Clean, scannable layout with clear navigation and a consistent header across pages.
+- Dashboard cards surface key statistics and recent activity to reduce time-to-information.
+- Forms prioritize readable labels, logical field order, and inline feedback.
+- Consistent table layouts with visible action controls for CRUD operations.
+
+## ♿ Accessibility
+
+- Skip-link to main content for keyboard and screen reader users.
+- Visible focus states for interactive elements.
+- Semantic headings and labels to improve form clarity.
+- High-contrast NHS-style color palette for readability.
 
 ## 🚀 Features
 
@@ -25,7 +57,7 @@ The NHS Service Tracker is a full-featured healthcare management system that pro
 - ✅ **Patient Detail Views**: Comprehensive patient profiles with calculated age, appointment history, and status management
 - ✅ **NHS Services**: Manage healthcare services with detailed descriptions
 - ✅ **Appointment System**: Schedule, track, and manage patient appointments
-- ✅ **User Management**: Role-based authentication (Admin/Clinician)
+- ✅ **User Management**: Django authentication with admin/staff access
 - ✅ **Search & Filter**: Real-time search across patients, services, and appointments
 - ✅ **Data Validation**: Comprehensive form validation and error handling
 - ✅ **Modern UI/UX**: Professional NHS-compliant design with responsive layouts and interactive elements
@@ -146,8 +178,8 @@ python manage.py runserver
 
 After running the setup, use these credentials to access the system:
 
-- **Email**: `admin@nhs.uk`
-- **Password**: `admin123`
+- **Email**: `admin@example.nhs.uk`
+- **Password**: `ChangeMe123!`
 - **Role**: Administrator (full system access)
 
 > ⚠️ **Security Note**: Change the default password immediately after first login!
@@ -159,7 +191,7 @@ After running the setup, use these credentials to access the system:
 #### Users
 
 - Secure authentication with password hashing
-- Role-based access control (Admin/Clinician)
+- Django authentication with staff/admin access for management features
 - Email-based login system
 
 #### Patients
@@ -245,6 +277,10 @@ pytest tests/test_models.py
 pytest -v
 ```
 
+### Manual Testing
+
+Manual test cases and results are documented in [TEST_PLAN.md](TEST_PLAN.md), including CRUD flows, accessibility checks, and responsive layout checks.
+
 ### Code Quality
 
 ```bash
@@ -259,10 +295,9 @@ coverage html  # Generate HTML report
 
 ### Project Health & Checks
 
-- **Workspace diagnostics**: Latest project-wide error scan reports no issues across code and docs.
-- **Documentation**: All Markdown files (including `docs/ASSESSOR_CHECKLIST.md`) are lint-clean and up to date.
-- **Database**: Django migrations apply cleanly; patient status/priority fields are fully migrated and aligned with models.
-- **Tests**: Test suite is present under `tests/` and discoverable with `pytest`; extend and run regularly to validate new features.
+- Use the VS Code Problems panel to review linting or type errors.
+- Apply Django migrations after model changes.
+- Run the test suite after functional changes or before deployment.
 
 ### Database Management
 
@@ -291,10 +326,12 @@ python verify_data.py
 
 ### Environment Variables
 
-Create a `.env` file in the project root (optional for this training app):
+Create an `env` file in the project root for local development (the setup script creates this for you):
 
 ```env
 DJANGO_SETTINGS_MODULE=nhs_service_tracker.settings
+DEBUG=1
+SECRET_KEY=dev-insecure-key-change-me
 DATABASE_URL=sqlite:///nhs_tracker.db
 ```
 
@@ -394,7 +431,7 @@ For production servers:
 - **Password Security**: Django password hashing
 - **Session Management**: Django authentication sessions
 - **CSRF Protection**: Django CSRF middleware
-- **Role-Based Access**: Django decorators for authorization
+- **Login Protection**: Django `login_required` decorators on protected views
 - **Input Validation**: Comprehensive form validation
 - **SQL Injection Prevention**: Django ORM parameterized queries
 - **Environment Isolation**: Separate configs for dev/test/prod
@@ -458,7 +495,7 @@ The application includes comprehensive dummy data for testing:
 - **Authentication**: Login, registration, logout flows
 - **CRUD Operations**: Create, read, update, delete for all entities
 - **Database Models**: Relationships, constraints, validations
-- **Security**: Role-based access, form validation
+- **Security**: Authentication checks and form validation
 - **Integration**: End-to-end user workflows
 
 ### Running Specific Tests

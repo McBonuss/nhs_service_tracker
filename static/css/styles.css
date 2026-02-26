@@ -17,6 +17,15 @@ body {
   background: #fff;
 }
 
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #ffb81c;
+  outline-offset: 2px;
+}
+
 .skip-link {
   position: absolute;
   left: -999px;
@@ -68,6 +77,28 @@ main {
   margin-bottom: 12px;
   border-radius: 4px;
   background: var(--nhs-light);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  background: var(--nhs-light);
+}
+
+.inline-form {
+  display: inline;
+  margin-left: 8px;
 }
 
 .stats-grid,
