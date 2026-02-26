@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.db.models import Count, Q
 from django.db import OperationalError, ProgrammingError, connection
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils import timezone
 from datetime import timedelta
 
@@ -197,6 +198,24 @@ def patients_edit(request, pk):
 
 
 @login_required
+def patients_delete(request, pk):
+    patient = get_object_or_404(Patient, pk=pk)
+    if request.method == "POST":
+        patient.delete()
+        messages.success(request, "Patient deleted.")
+        return redirect("patients_list")
+    return render(
+        request,
+        "confirm_delete.html",
+        {
+            "title": "Delete Patient",
+            "object_name": f"{patient.first_name} {patient.last_name}",
+            "cancel_url": reverse("patients_detail", args=[patient.pk]),
+        },
+    )
+
+
+@login_required
 def services_list(request):
     services = Service.objects.all()
     return render(request, "services/list.html", {"services": services})
@@ -213,6 +232,35 @@ def services_create(request):
 
 
 @login_required
+def services_edit(request, pk):
+    service = get_object_or_404(Service, pk=pk)
+    form = ServiceForm(request.POST or None, instance=service)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Service updated.")
+        return redirect("services_list")
+    return render(request, "services/form.html", {"form": form, "title": "Edit Service"})
+
+
+@login_required
+def services_delete(request, pk):
+    service = get_object_or_404(Service, pk=pk)
+    if request.method == "POST":
+        service.delete()
+        messages.success(request, "Service deleted.")
+        return redirect("services_list")
+    return render(
+        request,
+        "confirm_delete.html",
+        {
+            "title": "Delete Service",
+            "object_name": service.name,
+            "cancel_url": reverse("services_list"),
+        },
+    )
+
+
+@login_required
 def appointments_list(request):
     appointments = Appointment.objects.select_related("patient", "service").order_by("-scheduled_for")
     return render(request, "appointments/list.html", {"appointments": appointments})
@@ -226,3 +274,36 @@ def appointments_create(request):
         messages.success(request, "Appointment created.")
         return redirect("appointments_list")
     return render(request, "appointments/form.html", {"form": form, "title": "Schedule Appointment"})
+
+
+@login_required
+def appointments_edit(request, pk):
+    appointment = get_object_or_404(Appointment, pk=pk)
+    form = AppointmentForm(request.POST or None, instance=appointment)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Appointment updated.")
+        return redirect("appointments_list")
+    return render(
+        request,
+        "appointments/form.html",
+        {"form": form, "title": "Edit Appointment"},
+    )
+
+
+@login_required
+def appointments_delete(request, pk):
+    appointment = get_object_or_404(Appointment, pk=pk)
+    if request.method == "POST":
+        appointment.delete()
+        messages.success(request, "Appointment deleted.")
+        return redirect("appointments_list")
+    return render(
+        request,
+        "confirm_delete.html",
+        {
+            "title": "Delete Appointment",
+            "object_name": f"{appointment.patient} - {appointment.service}",
+            "cancel_url": reverse("appointments_list"),
+        },
+    )

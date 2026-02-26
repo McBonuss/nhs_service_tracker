@@ -11,10 +11,15 @@ urlpatterns = [
     path("patients/add/", views.patients_create, name="patients_create"),
     path("patients/<int:pk>/", views.patients_detail, name="patients_detail"),
     path("patients/<int:pk>/edit/", views.patients_edit, name="patients_edit"),
+    path("patients/<int:pk>/delete/", views.patients_delete, name="patients_delete"),
 
     path("services/", views.services_list, name="services_list"),
     path("services/add/", views.services_create, name="services_create"),
+    path("services/<int:pk>/edit/", views.services_edit, name="services_edit"),
+    path("services/<int:pk>/delete/", views.services_delete, name="services_delete"),
 
     path("appointments/", views.appointments_list, name="appointments_list"),
     path("appointments/add/", views.appointments_create, name="appointments_create"),
+    path("appointments/<int:pk>/edit/", views.appointments_edit, name="appointments_edit"),
+    path("appointments/<int:pk>/delete/", views.appointments_delete, name="appointments_delete"),
 ]
