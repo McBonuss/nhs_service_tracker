@@ -31,6 +31,33 @@ The NHS Service Tracker provides:
 
 This project consolidates patients, services, and appointments into a single system so staff can manage care workflows without spreadsheets or disconnected notes.
 
+### Requirements
+
+- Python 3.8+
+- Django 5+
+- SQLite (development) or PostgreSQL (production)
+- Modern web browser
+
+### Project Structure
+
+```plaintext
+nhs_service_tracker/
+├── nhs_service_tracker/          # Django project package
+│   ├── settings.py              # Django settings
+│   ├── urls.py                  # URL routing
+│   ├── wsgi.py                  # WSGI entry point
+│   └── asgi.py                  # ASGI entry point
+├── tracker/                      # Django app (views, models, forms)
+├── templates/                    # Django templates
+├── static/                       # Static assets (CSS/JS)
+├── tests/                       # Test suite
+├── docs/                        # Documentation (wireframes)
+├── manage.py                    # CLI commands and data seeding
+├── requirements.txt             # Python dependencies
+├── Procfile                     # Heroku deployment configuration
+└── README.md                    # Project documentation
+```
+
 ## UX
 
 ### Target Audience
@@ -88,6 +115,7 @@ Wireframe notes are documented in [docs/wireframes/README.md](docs/wireframes/RE
 - Calculated fields (age, next appointment)
 - Confirmation step for delete actions
 - Data validation and secure form handling
+- Dashboard status distribution and priority badges
 
 ## Data Model
 
@@ -121,6 +149,12 @@ Relationships allow:
 - Dashboard summaries
 - Upcoming appointment tracking
 - Priority distribution analytics
+
+### Seeded Data (Optional)
+
+- Example services (General Practice, Cardiology, Mental Health, etc.)
+- Sample patients with realistic NHS numbers and contact data
+- Example appointments across past and upcoming dates
 
 ## Technologies Used
 
@@ -162,6 +196,14 @@ pytest --cov=tracker
 
 Manual testing is documented in [TEST_PLAN.md](TEST_PLAN.md).
 
+### Running Specific Tests
+
+```bash
+pytest tests/test_auth_routes.py
+pytest tests/test_models.py
+pytest tests/test_crud.py
+```
+
 ## Deployment
 
 ### Local Setup
@@ -174,8 +216,14 @@ copy env.example env  # Windows
 # cp env.example env  # macOS/Linux
 python manage.py migrate
 python manage.py seed
+python manage.py seed_data
 python manage.py runserver
 ```
+
+### Default Login Credentials
+
+- Email: admin@example.nhs.uk
+- Password: ChangeMe123!
 
 ### Heroku Deployment
 
@@ -189,6 +237,10 @@ git push heroku main
 heroku run python manage.py migrate
 ```
 
+### One-click Deploy
+
+The included app.json supports Heroku setup with automatic database creation and migrations. After creating the app, set a production SECRET_KEY and run migrations if needed.
+
 ## Security
 
 - Django authentication
@@ -197,6 +249,7 @@ heroku run python manage.py migrate
 - `login_required` decorators on CRUD routes
 - ORM SQL injection protection
 - Environment-based `SECRET_KEY` storage
+- Set DEBUG=0 in production
 
 ## Future Enhancements
 
