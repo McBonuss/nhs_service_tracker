@@ -1,6 +1,10 @@
 # NHS Service Tracker
 
+[![Live Site](https://img.shields.io/badge/Live%20Site-Visit-0b5ed7?style=flat)](https://nhs-service-tracker-87d657694884.herokuapp.com/login/)
+
 A Django web application for managing NHS patients, services, and appointments. Built for healthcare teams to track care workflows, priorities, and appointments in a single, secure system.
+
+[View the live project here.](https://nhs-service-tracker-87d657694884.herokuapp.com/login/)
 
 ## Table of Contents
 
@@ -84,6 +88,24 @@ nhs_service_tracker/
 - As a scheduler, I can book and manage appointments.
 - As a manager, I can view workload statistics.
 
+#### First Time Visitor Goals
+
+- As a first time visitor, I want to understand the purpose of the system quickly.
+- As a first time visitor, I want to find how to sign in or register.
+- As a first time visitor, I want to see the core features before committing time.
+
+#### Returning Visitor Goals
+
+- As a returning visitor, I want to manage patients efficiently.
+- As a returning visitor, I want to update services and appointments with minimal clicks.
+- As a returning visitor, I want to confirm my previous changes persisted.
+
+#### Frequent User Goals
+
+- As a frequent user, I want to access key areas from the dashboard quickly.
+- As a frequent user, I want to search patients by name or NHS number.
+- As a frequent user, I want the UI to be consistent across devices.
+
 ### Design Principles
 
 - Clean, scannable interface
@@ -91,6 +113,20 @@ nhs_service_tracker/
 - Clear information hierarchy
 - Accessible forms and navigation
 - Dashboard-first information design
+
+### Design
+
+#### Colour Scheme
+
+- NHS-inspired blues with neutral backgrounds for readability.
+
+#### Typography
+
+- Clean, legible system fonts to prioritize clarity in clinical contexts.
+
+#### Imagery
+
+- Minimal imagery to keep focus on data entry and operational workflows.
 
 ## Wireframes
 
@@ -106,6 +142,13 @@ Wireframes were created during the planning phase to define layout, functionalit
 Wireframe notes are documented in [docs/wireframes/README.md](docs/wireframes/README.md).
 
 ![Wireframes](docs/wireframes/wire_frames.png)
+
+![Wireframes - Mobile Overview](docs/wireframes/images/cmobiframe.png)
+
+![Wireframes - Patient Views](docs/wireframes/images/patient_wf.png)
+
+- Home page wireframe: [docs/wireframes/images/patient_wf.png](docs/wireframes/images/patient_wf.png)
+- Mobile wireframe: [docs/wireframes/images/cmobiframe.png](docs/wireframes/images/cmobiframe.png)
 
 ## Features
 
@@ -126,6 +169,12 @@ Wireframe notes are documented in [docs/wireframes/README.md](docs/wireframes/RE
 - Confirmation step for delete actions
 - Data validation and secure form handling
 - Dashboard status distribution and priority badges
+
+### Features Left to Implement
+
+- Calendar view for appointments
+- Email reminders and notifications
+- Role-based access controls
 
 ## Data Model
 
@@ -244,6 +293,26 @@ pytest --cov=tracker
 
 Manual testing is documented in [TEST_PLAN.md](TEST_PLAN.md).
 
+### Validation
+
+- HTML validation: [W3C Markup Validator](https://validator.w3.org/) - Results: <add-link>
+- CSS validation: [W3C CSS Validator](https://jigsaw.w3.org/css-validator/) - Results: <add-link>
+
+### Testing User Stories
+
+- First Time Visitor Goals: See [TEST_PLAN.md](TEST_PLAN.md)
+- Returning Visitor Goals: See [TEST_PLAN.md](TEST_PLAN.md)
+- Frequent User Goals: See [TEST_PLAN.md](TEST_PLAN.md)
+
+### Further Testing
+
+- Browsers tested: Chrome, Edge, Firefox, Safari
+- Devices tested: Desktop, Laptop, iPhone, Android
+
+### Known Bugs
+
+- None currently known.
+
 ### Running Specific Tests
 
 ```bash
@@ -253,6 +322,8 @@ pytest tests/test_crud.py
 ```
 
 ## Deployment
+
+Live site: https://nhs-service-tracker-87d657694884.herokuapp.com/login/
 
 ### Local Setup
 
@@ -285,6 +356,22 @@ git push heroku main
 heroku run python manage.py migrate
 ```
 
+### Forking the Repository
+
+1. Log in to GitHub and locate the repository.
+2. Click the Fork button at the top of the repository.
+3. You now have a copy of the repository in your account.
+
+### Making a Local Clone
+
+1. Log in to GitHub and locate the repository.
+2. Click the Code button and copy the HTTPS URL.
+3. Open a terminal and run:
+
+```bash
+git clone <paste-repo-url>
+```
+
 ### One-click Deploy
 
 The included app.json supports Heroku setup with automatic database creation and migrations. After creating the app, set a production SECRET_KEY and run migrations if needed.
@@ -311,7 +398,19 @@ The included app.json supports Heroku setup with automatic database creation and
 
 ## Credits
 
-- Wireframes created by the developer
-- NHS design inspiration from NHS Digital guidelines
+### Code
+
 - Django documentation
 - Code Institute learning materials
+
+### Content
+
+- All content written by the developer
+
+### Media
+
+- Wireframes created by the developer
+
+### Acknowledgements
+
+- NHS design inspiration from NHS Digital guidelines
