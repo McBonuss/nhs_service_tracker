@@ -2,25 +2,9 @@
 
 [![Live Site](https://img.shields.io/badge/Live%20Site-Visit-0b5ed7?style=flat)](https://nhs-service-tracker-87d657694884.herokuapp.com/login/)
 
-A Django web application for managing NHS patients, services, and appointments. Built for healthcare teams to track care workflows, priorities, and appointments in a single, secure system.
-
 [View the live project here.](https://nhs-service-tracker-87d657694884.herokuapp.com/login/)
 
-## Table of Contents
-
-- [Overview](#overview)
-- [Rationale](#rationale)
-- [UX](#ux)
-- [Wireframes](#wireframes)
-- [Features](#features)
-- [Data Model](#data-model)
-- [Code Snippets](#code-snippets)
-- [Technologies Used](#technologies-used)
-- [Testing](#testing)
-- [Deployment](#deployment)
-- [Security](#security)
-- [Future Enhancements](#future-enhancements)
-- [Credits](#credits)
+This Django web application helps healthcare teams manage NHS patients, services, and appointments in a single secure system. It keeps core care workflows, priorities, and scheduling information in one place so staff can work without spreadsheets or disconnected notes.
 
 ## Overview
 
@@ -37,7 +21,7 @@ The NHS Service Tracker provides:
 
 This project consolidates patients, services, and appointments into a single system so staff can manage care workflows without spreadsheets or disconnected notes.
 
-## Rationale
+### Rationale
 
 - Clinics often rely on spreadsheets for patient lists and appointments, which makes updates inconsistent and auditing difficult.
 - This app keeps core data in a relational structure so patient status and appointment history stay linked.
@@ -72,7 +56,7 @@ nhs_service_tracker/
 └── README.md                    # Project documentation
 ```
 
-## UX
+## User Experience (UX)
 
 ### Target Audience
 
@@ -80,7 +64,7 @@ nhs_service_tracker/
 - Clinicians
 - Service managers/supervisors
 
-### User Stories
+### User stories
 
 - As a receptionist, I can create a patient record.
 - As a clinician, I can update medical notes.
@@ -128,7 +112,7 @@ nhs_service_tracker/
 
 - Minimal imagery to keep focus on data entry and operational workflows.
 
-## Wireframes
+### Wireframes
 
 Wireframes were created during the planning phase to define layout, functionality, and user journeys before development began. The mockups cover:
 
@@ -152,8 +136,6 @@ Wireframe notes are documented in [docs/wireframes/README.md](docs/wireframes/RE
 
 ## Features
 
-### Core Functionality
-
 - Patient records with NHS number tracking
 - Patient status and priority management
 - Dashboard summary cards
@@ -162,10 +144,7 @@ Wireframe notes are documented in [docs/wireframes/README.md](docs/wireframes/RE
 - Secure Django authentication
 - Patient search by name or NHS number
 - Responsive NHS-style UI
-
-### Additional Features
-
-- Calculated fields (age, next appointment)
+- Calculated fields such as age and next appointment
 - Confirmation step for delete actions
 - Data validation and secure form handling
 - Dashboard status distribution and priority badges
@@ -176,25 +155,25 @@ Wireframe notes are documented in [docs/wireframes/README.md](docs/wireframes/RE
 - Email reminders and notifications
 - Role-based access controls
 
-## Data Model
+### Data Model
 
-### Patients
+#### Patients
 
 - NHS number (unique)
 - Demographics
-- Status (Active, Inactive, Discharged, Deceased)
-- Priority (Low, Medium, High, Urgent)
+- Status: Active, Inactive, Discharged, Deceased
+- Priority: Low, Medium, High, Urgent
 - Medical notes
 - Calculated age
 - Appointment history
 
-### Services
+#### Services
 
 - Service name
 - Description
 - Linked appointments
 
-### Appointments
+#### Appointments
 
 - Linked patient
 - Linked service
@@ -209,15 +188,15 @@ Relationships allow:
 - Upcoming appointment tracking
 - Priority distribution analytics
 
-### Seeded Data (Optional)
+#### Seeded Data (Optional)
 
-- Example services (General Practice, Cardiology, Mental Health, etc.)
+- Example services such as General Practice, Cardiology, and Mental Health
 - Sample patients with realistic NHS numbers and contact data
 - Example appointments across past and upcoming dates
 
-## Code Snippets
+### Code Snippets
 
-### Model Relationships
+#### Model Relationships
 
 ```python
 class Appointment(models.Model):
@@ -228,7 +207,7 @@ class Appointment(models.Model):
 	status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="scheduled")
 ```
 
-### Protected CRUD View
+#### Protected CRUD View
 
 ```python
 @login_required
@@ -242,7 +221,7 @@ def patients_edit(request, pk):
 	return render(request, "patients/form.html", {"form": form, "title": "Edit Patient"})
 ```
 
-### Template Form Pattern
+#### Template Form Pattern
 
 ```html
 <form method="post" novalidate>
@@ -274,6 +253,16 @@ def patients_edit(request, pk):
 - pytest-django
 - coverage
 - flake8
+
+## Security
+
+- Django authentication
+- CSRF protection
+- Password hashing
+- login_required decorators on CRUD routes
+- ORM SQL injection protection
+- Environment-based SECRET_KEY storage
+- DEBUG=0 in production
 
 ## Testing
 
@@ -375,16 +364,6 @@ git clone <paste-repo-url>
 ### One-click Deploy
 
 The included app.json supports Heroku setup with automatic database creation and migrations. After creating the app, set a production SECRET_KEY and run migrations if needed.
-
-## Security
-
-- Django authentication
-- CSRF protection
-- Password hashing
-- `login_required` decorators on CRUD routes
-- ORM SQL injection protection
-- Environment-based `SECRET_KEY` storage
-- Set DEBUG=0 in production
 
 ## Future Enhancements
 
