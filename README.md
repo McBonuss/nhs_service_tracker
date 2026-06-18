@@ -342,7 +342,25 @@ heroku config:set SECRET_KEY="<your-secret-key>"
 heroku config:set DEBUG=0
 
 git push heroku main
-heroku run python manage.py migrate
+heroku ps:scale web=1
+```
+
+This project includes a release phase in Procfile, so migrations and default admin seeding run automatically on deploy.
+
+### Heroku Troubleshooting
+
+If you see an Application Error page, run these checks:
+
+```bash
+heroku apps
+heroku logs --tail -a nhs-service-tracker
+heroku ps -a nhs-service-tracker
+```
+
+If logs show H14 No web processes running, start a web dyno:
+
+```bash
+heroku ps:scale web=1 -a nhs-service-tracker
 ```
 
 ### Forking the Repository
